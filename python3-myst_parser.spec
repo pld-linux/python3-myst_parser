@@ -6,15 +6,16 @@
 Summary:	Extended CommonMark compliant parser with bridges to docutils and Sphinx
 Summary(pl.UTF-8):	Rozszerzony parser zgodny z CommonMark z interfejsami do docutils i Sphinksa
 Name:		python3-myst_parser
-Version:	0.16.1
+Version:	0.17.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/myst-parser/
 Source0:	https://files.pythonhosted.org/packages/source/m/myst-parser/myst-parser-%{version}.tar.gz
-# Source0-md5:	08c9c5981bfd1bdd324b18609022f76e
+# Source0-md5:	06b63965cd30eeb7aa14d0779e5756a2
+Patch0:		%{name}-docutils.patch
 URL:		https://pypi.org/project/myst-parser/
-BuildRequires:	python3-modules >= 1:3.6
+BuildRequires:	python3-modules >= 1:3.7
 BuildRequires:	python3-setuptools >= 1:46.4.0
 %if %{with tests}
 BuildRequires:	python3-PyYAML
@@ -25,21 +26,28 @@ BuildRequires:	python3-docutils >= 0.15
 BuildRequires:	python3-docutils < 0.18
 BuildRequires:	python3-jinja2
 BuildRequires:	python3-markdown-it-py >= 1.0.0
-BuildRequires:	python3-markdown-it-py < 3.0.0
+BuildRequires:	python3-markdown-it-py < 3
 BuildRequires:	python3-mdit-py-plugins >= 0.3.0
-BuildRequires:	python3-pytest >= 3.6
+BuildRequires:	python3-pytest >= 6
 BuildRequires:	python3-pytest-cov
+BuildRequires:	python3-pytest-param-files >= 0.3.4
 BuildRequires:	python3-pytest-regressions
+BuildRequires:	python3-typing_extensions
 %endif
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 BuildRequires:	sed >= 4.0
 %if %{with doc}
+BuildRequires:	python3-ipython
+BuildRequires:	python3-sphinx_book_theme >= 0.1.0
+BuildRequires:	python3-sphinx_panels >= 0.5.2
+BuildRequires:	python3-sphinxcontrib-bibtex >= 2.1
+BuildRequires:	python3-sphinxcontrib-mermaid >= 0.6.3
+BuildRequires:	python3-sphinxext-opengraph >= 0.4.2
+BuildRequires:	python3-sphinxext-rediraffe >= 0.2
 BuildRequires:	sphinx-pdg-3
-# or
-BuildRequires:	python3-tox
 %endif
-Requires:	python3-modules >= 1:3.6
+Requires:	python3-modules >= 1:3.7
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -64,6 +72,7 @@ Dokumentacja API modułu Pythona myst_parser.
 
 %prep
 %setup -q -n myst-parser-%{version}
+%patch0 -p1
 
 %{__sed} -i -e '/mdit-py-plugins/ s/~=/>=/' setup.cfg
 
