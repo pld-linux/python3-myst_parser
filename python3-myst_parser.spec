@@ -7,7 +7,7 @@ Summary:	Extended CommonMark compliant parser with bridges to docutils and Sphin
 Summary(pl.UTF-8):	Rozszerzony parser zgodny z CommonMark z interfejsami do docutils i Sphinksa
 Name:		python3-myst_parser
 Version:	0.17.0
-Release:	4
+Release:	5
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/myst-parser/
