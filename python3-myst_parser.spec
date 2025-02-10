@@ -6,17 +6,17 @@
 Summary:	Extended CommonMark compliant parser with bridges to docutils and Sphinx
 Summary(pl.UTF-8):	Rozszerzony parser zgodny z CommonMark z interfejsami do docutils i Sphinksa
 Name:		python3-myst_parser
-Version:	0.17.0
-Release:	5
+Version:	4.0.0
+Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/myst-parser/
-Source0:	https://files.pythonhosted.org/packages/source/m/myst-parser/myst-parser-%{version}.tar.gz
-# Source0-md5:	06b63965cd30eeb7aa14d0779e5756a2
-Patch0:		%{name}-docutils.patch
+Source0:	https://pypi.debian.net/myst-parser/myst_parser-%{version}.tar.gz
+# Source0-md5:	e702667009f8e1d054d0de2718276384
 URL:		https://pypi.org/project/myst-parser/
+BuildRequires:	python3-build
 BuildRequires:	python3-modules >= 1:3.7
-BuildRequires:	python3-setuptools >= 1:46.4.0
+BuildRequires:	python3-installer
 %if %{with tests}
 BuildRequires:	python3-PyYAML
 BuildRequires:	python3-Sphinx >= 3.1
@@ -35,7 +35,7 @@ BuildRequires:	python3-pytest-regressions
 BuildRequires:	python3-typing_extensions
 %endif
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.714
+BuildRequires:	rpmbuild(macros) >= 2.044
 BuildRequires:	sed >= 4.0
 %if %{with doc}
 BuildRequires:	python3-ipython
@@ -71,13 +71,12 @@ API documentation for Python myst_parser module.
 Dokumentacja API modułu Pythona myst_parser.
 
 %prep
-%setup -q -n myst-parser-%{version}
-%patch0 -p1
+%setup -q -n myst_parser-%{version}
 
-%{__sed} -i -e '/mdit-py-plugins/ s/~=/>=/' setup.cfg
+sed -i -e 's#.*"mdit-py-plugins.*##g' pyproject.toml
 
 %build
-%py3_build
+%py3_build_pyproject
 
 %if %{with tests}
 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 \
@@ -92,7 +91,7 @@ cd docs
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%py3_install
+%py3_install_pyproject
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -101,13 +100,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc CHANGELOG.md LICENSE README.md
 %attr(755,root,root) %{_bindir}/myst-anchors
+%attr(755,root,root) %{_bindir}/myst-docutils-demo
 %attr(755,root,root) %{_bindir}/myst-docutils-html
 %attr(755,root,root) %{_bindir}/myst-docutils-html5
 %attr(755,root,root) %{_bindir}/myst-docutils-latex
 %attr(755,root,root) %{_bindir}/myst-docutils-pseudoxml
 %attr(755,root,root) %{_bindir}/myst-docutils-xml
+%attr(755,root,root) %{_bindir}/myst-inv
 %{py3_sitescriptdir}/myst_parser
-%{py3_sitescriptdir}/myst_parser-%{version}-py*.egg-info
+%{py3_sitescriptdir}/myst_parser-%{version}.dist-info
 
 %if %{with doc}
 %files apidocs
