@@ -7,12 +7,13 @@ Summary:	Extended CommonMark compliant parser with bridges to docutils and Sphin
 Summary(pl.UTF-8):	Rozszerzony parser zgodny z CommonMark z interfejsami do docutils i Sphinksa
 Name:		python3-myst_parser
 Version:	4.0.0
-Release:	4
+Release:	5
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/myst-parser/
 Source0:	https://pypi.debian.net/myst-parser/myst_parser-%{version}.tar.gz
 # Source0-md5:	e702667009f8e1d054d0de2718276384
+Patch0:		myst_parser-deps.patch
 URL:		https://pypi.org/project/myst-parser/
 BuildRequires:	python3-build
 BuildRequires:	python3-flit_core >= 3.4
@@ -89,6 +90,7 @@ Dokumentacja API modułu Pythona myst_parser.
 
 %prep
 %setup -q -n myst_parser-%{version}
+%patch -P0 -p1
 
 %build
 %py3_build_pyproject

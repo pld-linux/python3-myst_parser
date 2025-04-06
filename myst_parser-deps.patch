@@ -1,0 +1,11 @@
+--- myst_parser-4.0.0/pyproject.toml.orig	2024-08-05 16:02:40.693837600 +0200
++++ myst_parser-4.0.0/pyproject.toml	2025-04-06 14:13:26.192368839 +0200
+@@ -36,7 +36,7 @@ dependencies = [
+     "docutils>=0.19,<0.22",
+     "jinja2", # required for substitutions, but let sphinx choose version
+     "markdown-it-py~=3.0",
+-    "mdit-py-plugins~=0.4,>=0.4.1",
++    "mdit-py-plugins>=0.4.1,<0.5",
+     "pyyaml",
+     "sphinx>=7,<9",
+ ]
