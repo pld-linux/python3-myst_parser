@@ -6,13 +6,15 @@
 Summary:	Extended CommonMark compliant parser with bridges to docutils and Sphinx
 Summary(pl.UTF-8):	Rozszerzony parser zgodny z CommonMark z interfejsami do docutils i Sphinksa
 Name:		python3-myst_parser
-Version:	5.0.0
+Version:	5.1.0
 Release:	1
 License:	MIT
 Group:		Libraries/Python
 #Source0Download: https://pypi.org/simple/myst-parser/
 Source0:	https://pypi.debian.net/myst-parser/myst_parser-%{version}.tar.gz
-# Source0-md5:	b0533971c0030962fc5a6af3416e5b4c
+# Source0-md5:	9c0317832a53f48d10f94241057c360f
+# "~=0.6,>=0.6.1" becomes a dependency poldek cannot parse
+Patch0:		myst_parser-deps.patch
 URL:		https://pypi.org/project/myst-parser/
 BuildRequires:	python3-build
 BuildRequires:	python3-flit_core >= 3.4
@@ -28,11 +30,11 @@ BuildRequires:	python3-defusedxml
 BuildRequires:	python3-docutils >= 0.20
 BuildRequires:	python3-docutils < 0.23
 BuildRequires:	python3-jinja2
-BuildRequires:	python3-markdown-it-py >= 4.0
+BuildRequires:	python3-markdown-it-py >= 4.2
 BuildRequires:	python3-markdown-it-py < 5
-BuildRequires:	python3-mdit-py-plugins >= 0.5
-BuildRequires:	python3-mdit-py-plugins < 0.6
-BuildRequires:	python3-pygments < 2.20
+BuildRequires:	python3-mdit-py-plugins >= 0.6.1
+BuildRequires:	python3-mdit-py-plugins < 0.7
+BuildRequires:	python3-pygments < 2.21
 BuildRequires:	python3-pytest >= 9
 BuildRequires:	python3-pytest < 10
 BuildRequires:	python3-pytest-cov
@@ -89,6 +91,7 @@ Dokumentacja API modułu Pythona myst_parser.
 
 %prep
 %setup -q -n myst_parser-%{version}
+%patch -P0 -p1
 
 %build
 %py3_build_pyproject
